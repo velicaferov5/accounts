@@ -13,11 +13,6 @@ public class AccountService {
     private static List<Account> accountList = new ArrayList<>();
     private static TransactionService transactionService = new TransactionService();
 
-
-    public static Map<Integer, Customer> getCustomerMap() {
-        return customerMap;
-    }
-
     public static List<Account> getAccountList() {
         return accountList;
     }
@@ -45,10 +40,41 @@ public class AccountService {
         return account;
     }
 
+    /**
+     * Gets and returns account with {@param accountId}
+     *
+     * @param accountId
+     * @return Account
+     */
     public Account getAccountById(Integer accountId) {
         List<Account> accountList = getAccountList();
         Optional<Account> optional = accountList.stream().filter(a -> a.getAccountId().equals(accountId)).findAny();
         return optional.orElse(null);
+    }
+
+    /**
+     * Gets and returns customer with {@param customerId}
+     *
+     * @param customerId
+     * @return Customer
+     */
+    public Customer getCustomerById(Integer customerId) {
+        return customerMap.get(customerId);
+    }
+
+    /**
+     * Removes customer with {@param customerId}
+     * @param customerId
+     * @return
+     */
+    public boolean removeCustomerById(Integer customerId) {
+        try {
+            customerMap.remove(customerId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private boolean deposit(Account account, double amount) {
@@ -80,10 +106,6 @@ public class AccountService {
             return withdraw(account, amount);
         }
         return false;
-    }
-
-    public Customer getCustomerById(Integer customerId) {
-        return customerMap.get(customerId);
     }
 
     private Customer newCustomer(int customerId) {

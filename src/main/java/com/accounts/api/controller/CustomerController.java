@@ -2,10 +2,7 @@ package com.accounts.api.controller;
 
 import com.accounts.api.model.Customer;
 import com.accounts.api.service.AccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * REST-ful services to for {@link Customer}.
@@ -24,5 +21,16 @@ public class CustomerController {
     @GetMapping(value = "/get/{customerId}")
     public Customer getCustomer (@PathVariable(name="customerId") int customerId) {
         return accountService.getCustomerById(customerId);
+    }
+
+    /**
+     * Removes customer
+     *
+     * @param customerId
+     * @return result of remove
+     */
+    @DeleteMapping(value = "/remove/{customerId}")
+    public boolean removeCustomer (@PathVariable(name="customerId") int customerId) {
+        return accountService.removeCustomerById(customerId);
     }
 }

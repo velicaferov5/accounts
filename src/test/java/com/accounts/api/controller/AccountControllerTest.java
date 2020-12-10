@@ -39,4 +39,13 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
    }
+
+    @Test
+    void removeProduct() throws Exception{
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete("/api/customer/remove/0").contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(builder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
 }

@@ -20,14 +20,18 @@ class AccountServiceTest {
     @InjectMocks
     private AccountService accountService;
 
+    private static final int CUSTOMERS = 5;
+
     @Test
     void testNewAccountWithoutAmount() {
+        removeCustomers();
         Account account = new Account(Customer.getLastCustomerId(), 0);
         assertAccounts(account, accountService.newAccount(Customer.getLastCustomerId()+1, 0));
     }
 
     @Test
     void testNewAccountWithDeposit() {
+        removeCustomers();
         Account account = new Account(Customer.getLastCustomerId(), 25);
         account.getTransactions().add("01-12-2020 00:00:00 + Depositted: " + 25);
         assertAccounts(account, accountService.newAccount(Customer.getLastCustomerId()+1, 25));
@@ -35,9 +39,16 @@ class AccountServiceTest {
 
     @Test
     void testNewAccountWithWithdrawal() {
+        removeCustomers();
         Account account = new Account(Customer.getLastCustomerId(), -25);
         account.getTransactions().add("01-12-2020 00:00:00 + Withdrawed: " + 25);
         assertAccounts(account, accountService.newAccount(Customer.getLastCustomerId()+1, -25));
+    }
+
+    private void removeCustomers() {
+        for (int index=0; index<CUSTOMERS; index++) {
+            accountService.removeCustomerById(index);
+        }
     }
 
     private void assertAccounts(Account expected, Account actual) {
@@ -48,6 +59,7 @@ class AccountServiceTest {
     }
 
     private void assertTransactions(List<String> expected, List<String> actual) {
+        removeCustomers();
         assertEquals(expected.size(), actual.size());
     }
 }

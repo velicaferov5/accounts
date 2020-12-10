@@ -40,3 +40,9 @@ Input: customerId (int)
 Output: Customer
 Type: GET
 Use: Get customer by ID
+
+URL: /api/customer/remove/{customerId}
+Input: customerId (int)
+Output: Customer
+Type: DELETE
+Use: Remove customer by ID
